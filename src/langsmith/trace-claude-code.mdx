@@ -40,6 +40,12 @@ To use an API key instead add it to `~/.claude/langsmith.json`:
 { "enabled": true, "api_key": "lsv2_pt_...", "project": "claude-code" }
 ```
 
+If more than one credential is set the plugin uses the first one it finds:
+
+1. The plugin's own key from `api_key` or `CC_LANGSMITH_API_KEY`.
+2. Your `langsmith auth login` sign-in.
+3. A generic `LANGSMITH_API_KEY` from your environment.
+
 Tracing pauses when your sign-in expires or your key is rejected and Claude Code reminds you in the chat until you fix it. Admins can also [require a working sign-in](#require-a-working-sign-in) for every prompt.
 
 ## Turn on tracing
