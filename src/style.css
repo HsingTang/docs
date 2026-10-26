@@ -1078,3 +1078,8 @@ html[data-current-path="/langsmith/self-hosted-changelog"] .changelog-chapter-he
     display: none;
   }
 }
+
+.ls-add { border-left: 4px solid #16a34a; background: rgba(22, 163, 74, 0.1); padding: 4px 16px; margin: 12px 0; }
+.ls-del { border-left: 4px solid #dc2626; background: rgba(220, 38, 38, 0.1); padding: 4px 16px; margin: 12px 0; opacity: 0.85; }
+.ls-add::before { content: "Added"; display: block; font-weight: 600; color: #16a34a; }
+.ls-del::before { content: "Removed"; display: block; font-weight: 600; color: #dc2626; }
