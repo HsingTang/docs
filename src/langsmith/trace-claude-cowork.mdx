@@ -4,10 +4,13 @@ sidebarTitle: Claude Cowork
 description: Send Claude Cowork tasks, tool calls, and skill use to LangSmith with the LangSmith tracing plugin for Claude.
 ---
 
+import ProjectTracingCompatibility from '/snippets/langsmith/project-tracing-compatibility.mdx';
 import CodingAgentManagedSettings from '/snippets/langsmith/coding-agent-managed-settings.mdx';
 import CodingAgentSecretRedaction from '/snippets/langsmith/coding-agent-secret-redaction.mdx';
 
 [Claude Cowork](https://claude.com/docs/cowork/guide/plugins) runs the same plugins as Claude Code so the [LangSmith tracing plugin for Claude Code](/langsmith/trace-claude-code) also traces Cowork tasks. Each turn becomes a trace and a task's turns are grouped into a thread.
+
+<ProjectTracingCompatibility />
 
 ## Prerequisites
 
@@ -35,7 +38,7 @@ langsmith auth login
 To use an API key instead add it to `~/.claude/langsmith.json`, the same file Claude Code reads:
 
 ```json
-{ "enabled": true, "api_key": "lsv2_pt_...", "project": "claude-cowork" }
+{ "enabled": true, "api_key": "lsv2_pt_...", "project": "<environment-tracer-session-name>" }
 ```
 
 If more than one credential is set the plugin uses the first one it finds:
@@ -51,10 +54,10 @@ Tracing pauses when your sign-in expires or your key is rejected until you fix i
 Tracing is off until you turn it on in `~/.claude/langsmith.json`:
 
 ```json
-{ "enabled": true, "project": "claude-cowork" }
+{ "enabled": true, "project": "<environment-tracer-session-name>" }
 ```
 
-Start a Cowork task and open the `claude-cowork` project in [LangSmith](https://smith.langchain.com). Skill calls record which skill ran so you can filter traces by skill.
+Start a Cowork task and open the selected agent environment in [LangSmith](https://smith.langchain.com). Skill calls record which skill ran so you can filter traces by skill.
 
 {/* TODO: add a screenshot of a sample Cowork trace that includes a skill call. */}
 

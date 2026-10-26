@@ -2055,9 +2055,8 @@
                     "group": "Configuration & troubleshooting",
                     "pages": [
                       {
-                        "group": "Project & environment settings",
+                        "group": "Agent & environment settings",
                         "pages": [
-                          "langsmith/log-traces-to-project",
                           "langsmith/log-traces-to-agent",
                           "langsmith/trace-replicas",
                           "langsmith/trace-without-env-vars",
@@ -2718,6 +2717,10 @@
     }
   },
   "redirects": [
+    {
+      "source": "/langsmith/log-traces-to-project",
+      "destination": "/langsmith/log-traces-to-agent"
+    },
     {
       "source": "/langsmith/typesafe-compatible-model",
       "destination": "/langsmith/compatible-decision-model-provider"
