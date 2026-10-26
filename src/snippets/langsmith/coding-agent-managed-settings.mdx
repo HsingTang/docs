@@ -1,4 +1,4 @@
-An admin can lock tracing settings for every user with a managed file at `~/.langsmith-plugins/managed.json` in each user's home folder. Settings in this file override the user's own config files and environment variables, and the Claude Code, Cursor, and Codex plugins all read it.
+An admin can lock tracing settings for every user with a managed file at `~/.langsmith-plugins/managed.json` in each user's home folder. The Claude Code, Cursor, and Codex plugins all read this file and its settings override the user's own config files and environment variables.
 
 ```json
 {
@@ -8,14 +8,12 @@ An admin can lock tracing settings for every user with a managed file at `~/.lan
 }
 ```
 
-The managed file works on macOS and Linux. The plugin trusts it only when:
+The managed file works on macOS and Linux. The plugin only trusts it when:
 
 - Root owns the file and its folder.
 - No other user can write to either.
 - Neither is a symlink.
 
-If the file exists but fails these checks, tracing stops and the user sees a message to contact their admin.
+If the file exists but fails these checks then tracing stops and the user sees a message to contact their admin. Locking a setting also locks the settings tied to it so users cannot route traces around the lock. For example locking `project` also stops users from adding their own [replicas](/langsmith/log-traces-to-project).
 
-Locking a setting also locks the settings tied to it, so users cannot route traces around the lock. For example, locking `project` also stops users from adding their own [replicas](/langsmith/log-traces-to-project).
-
-Use your mobile device management (MDM) tool, such as Jamf or Microsoft Intune, to install the file on each machine. For the install commands and every setting you can lock, see the [plugin settings guide](https://github.com/langchain-ai/langsmith-plugin-binary/blob/main/docs/settings.md).
+Admins usually install the file on each machine with a mobile device management (MDM) tool such as Jamf or Microsoft Intune. For an example of that install and every setting you can lock see the [plugin settings guide](https://github.com/langchain-ai/langsmith-plugin-binary/blob/main/docs/settings.md).

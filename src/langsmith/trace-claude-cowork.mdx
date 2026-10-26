@@ -4,10 +4,10 @@ sidebarTitle: Claude Cowork
 description: Send Claude Cowork tasks, tool calls, and skill use to LangSmith with the LangSmith tracing plugin for Claude.
 ---
 
+import CodingAgentManagedSettings from '/snippets/langsmith/coding-agent-managed-settings.mdx';
+import CodingAgentSecretRedaction from '/snippets/langsmith/coding-agent-secret-redaction.mdx';
 
-<div className="ls-add">
-
-[Claude Cowork](https://claude.com/docs/cowork/guide/plugins) runs the same plugins as Claude Code, so the [LangSmith tracing plugin for Claude Code](/langsmith/trace-claude-code) also traces Cowork tasks. Each turn becomes a trace with its model calls, tool calls, skill calls, and subagents, and the turns from one task are grouped into a thread.
+[Claude Cowork](https://claude.com/docs/cowork/guide/plugins) runs the same plugins as Claude Code so the [LangSmith tracing plugin for Claude Code](/langsmith/trace-claude-code) also traces Cowork tasks. Each turn becomes a trace and a task's turns are grouped into a thread.
 
 ## Prerequisites
 
@@ -22,33 +22,62 @@ Cowork installs plugins from your claude.ai account. To install the plugin for y
 2. Add the `langchain-ai/langsmith-claude-code-plugins` repository as a marketplace.
 3. Install the `langsmith-tracing` plugin from that marketplace.
 
-The plugin loads into the next Cowork task you start. To install it for everyone in your organization, see [Choose a rollout route](https://claude.com/docs/plugins/org-rollout).
+The plugin loads into the next Cowork task you start. To install it for everyone see [Deploy to your organization](#deploy-to-your-organization). For more on installing plugins see [Cowork plugins](https://claude.com/docs/cowork/guide/plugins) in the Claude docs.
 
-## Sign in and turn on tracing
+## Sign in
 
-Sign in once with the LangSmith CLI:
+Sign in once with the LangSmith CLI. See [Install the LangSmith CLI](/langsmith/langsmith-cli#install) if you do not have it yet.
 
 ```bash
 langsmith auth login
 ```
 
-Then turn tracing on in `~/.claude/langsmith.json`, the same file Claude Code reads:
+To use an API key instead add it to `~/.claude/langsmith.json`, the same file Claude Code reads:
+
+```json
+{ "enabled": true, "api_key": "lsv2_pt_...", "project": "claude-cowork" }
+```
+
+Tracing pauses when your sign-in expires or your key is rejected until you fix it. Admins can also [require a working sign-in](#require-a-working-sign-in) for every prompt.
+
+## Turn on tracing
+
+Tracing is off until you turn it on in `~/.claude/langsmith.json`:
 
 ```json
 { "enabled": true, "project": "claude-cowork" }
 ```
 
-To use an API key instead of the CLI sign-in, add it to the same file as `api_key`. For every other setting, see [Trace Claude Code applications](/langsmith/trace-claude-code).
-
-## View traces in LangSmith
-
-Start a Cowork task and open the project you configured. Each turn appears as a trace, and the **Threads** tab groups a task's turns. Skill calls record which skill ran, so you can filter traces by skill.
+Start a Cowork task and open the `claude-cowork` project in [LangSmith](https://smith.langchain.com). Skill calls record which skill ran so you can filter traces by skill.
 
 {/* TODO: add a screenshot of a sample Cowork trace that includes a skill call. */}
 
-## Limitations
+## Deploy to your organization
 
-- Tracing has been tested in desktop Cowork tasks only. Cloud Cowork sessions are not yet tested.
+Admins can install the plugin for everyone and control how it traces from one place.
 
-</div>
+### Install for everyone
 
+Organization owners can add the plugin to every member's claude.ai account so it reaches Cowork and Claude Code together. For the setup see [Choose a rollout route](https://claude.com/docs/plugins/org-rollout).
+
+### Lock settings
+
+<CodingAgentManagedSettings />
+
+### Require a working sign-in
+
+Strict auth refuses every prompt until the user's sign-in or key works so no session goes untraced. It is off by default and has no effect while tracing is off. Set `strict_auth` to `true` in the managed file to turn it on for everyone.
+
+## Hide a conversation
+
+Run `/langsmith-tracing:mute` in a Cowork task to keep its content out of LangSmith and `/langsmith-tracing:unmute` to turn it back on. To mute every task by default set `defaultMuted` to `true`.
+
+## Secret redaction
+
+The plugin strips secrets on your machine before anything is uploaded so they never reach LangSmith or a replica. Redaction is on by default.
+
+<CodingAgentSecretRedaction />
+
+## Settings
+
+Cowork uses the same settings as Claude Code. For the main ones see [Settings](/langsmith/trace-claude-code#settings) and for every setting see the [plugin settings](https://github.com/langchain-ai/langsmith-claude-code-plugins#settings).
