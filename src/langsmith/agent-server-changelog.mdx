@@ -337,7 +337,7 @@ Latest version: `0.16.7`
 
 ## v0.15
 
-Latest version: `0.15.9`
+Latest version: `0.15.10`
 ### Changes
 
 #### New Features
@@ -355,6 +355,7 @@ Latest version: `0.15.9`
 - Fix HTTPS webhooks failing after the AnyIO security upgrade.
 - Fix agent server startup crash (`ImportError: _ExtendedAttributes`) caused by an unpinned Datadog tracer install pulling opentelemetry-api 1.45.0.
 - Fixes a memory leak in the Go core's Postgres checkpointer caused by an outdated Datadog tracing dependency.
+- Fixes Playwright's browser driver and other subprocesses started from worker threads failing to launch on LangSmith Deployment.
 
 #### Security
 - Fix grpc-go security vulnerabilities by upgrading to 1.83.2.
@@ -372,6 +373,13 @@ Latest version: `0.15.9`
 - Updates bundled certifi and Hono to clear known CVEs.
 
 <Accordion title="v0.15 releases">
+<Update label="2026-10-27" tags={["agent-server"]}>
+## v0.15.10
+
+### Fixes
+- Fixes Playwright's browser driver and other subprocesses started from worker threads failing to launch on LangSmith Deployment.
+
+</Update>
 <Update label="2026-10-23" tags={["agent-server"]}>
 ## v0.15.9
 
